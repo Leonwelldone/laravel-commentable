@@ -18,10 +18,18 @@ class Comment extends Model {
         parent::__construct($attributes);
     }
 
+    /**
+     * Return the model name
+     * @return string
+     */
     public function commentableModel() {
         return config('laravel-commentable.model');
     }
 
+    /**
+     * Return childrens
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
     public function childrens() {
         return $this->morphMany($this->commentableModel(), 'commentable');
     }
@@ -54,7 +62,6 @@ class Comment extends Model {
     /**
      * @param $id
      * @param $data
-     *
      * @return mixed
      */
     public function updateComment($id, $data) {
@@ -70,8 +77,7 @@ class Comment extends Model {
 
     /**
      * @param $id
-     *
-     * @return mixed
+     * @return boolean
      */
     public function deleteComment($id) {
 
