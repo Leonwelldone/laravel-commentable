@@ -52,7 +52,7 @@ class CommentableController extends Controller {
         // Verification de l'existance de l'objet concerné
         $obj = $className::where("id",$id)->firstOrFail();
 
-        $comment = $obj->comment(["title" => request("title"),"body" => request("body")], \Auth::user());
+        $comment = $obj->createComment(["title" => request("title"),"body" => request("body")], \Auth::user());
 
         if($comment) {
             return array("success" => true, "comment" => $comment);
@@ -61,7 +61,7 @@ class CommentableController extends Controller {
         }
 
     }
-    
+
     /*
      * Suppression d'un commentaire
      */

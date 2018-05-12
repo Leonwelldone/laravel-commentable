@@ -53,7 +53,14 @@ class Comment extends Model {
      * @return mixed
      */
     public function updateComment($id, $data) {
-        return (bool)static::find($id)->update($data);
+
+        $obj = static::find($id);
+        if($obj->author->id != \Auth::user()->id && (isset(\Auth::user()->is_admin) && !\Auth::user()->is_admin)) {
+            // The current logged user was not the author, and it's not an admin !
+            return false;
+        }
+
+        return (bool)$obj->update($data);
     }
 
     /**
@@ -62,6 +69,12 @@ class Comment extends Model {
      * @return mixed
      */
     public function deleteComment($id) {
-        return (bool)static::find($id)->delete();
+
+        $obj = static::find($id);
+        if($obj->author->id != \Auth::user()->id && (isset(\Auth::user()->is_admin) && !\Auth::user()->is_admin)) {
+            // The current logged user was not the author, and it's not an admin !
+            return false;
+        }
+        return (bool)$obj->delete();
     }
 }

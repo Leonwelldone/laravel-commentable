@@ -15,7 +15,7 @@ trait Commentable {
     }
 
 
-    public function comment($data, $author)
+    public function createComment($data, $author)
     {
         $commentableModel = $this->commentableModel();
         $comment = (new $commentableModel())->createComment($this, $data, $author);
