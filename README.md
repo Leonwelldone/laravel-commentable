@@ -25,7 +25,7 @@ You can configure the package on /config/laravel-commentable.php
 
 By default, the api is accessible at /api/comments/. You have 3 routes :
 * GET /api/comments/{type}/{id} : Get comments
-* POST /api/comments/{type}/{id} : Create a new comment (data required : title and body)
+* POST /api/comments/create/{type}/{id} : Create a new comment (data required : title and body)
 * DELETE /api/comments/{comment_id} : Delete a comment (if you are the owner, OR if you are an admin (User->is_admin = true))
 
 
@@ -43,6 +43,16 @@ class MyModel extends Model
     use Commentable;
 }
 ```
+
+### Configure the config/laravel-commentable.php
+```
+<?php
+$allowType = [
+"comment" => \Keggermont\Commentable\Models\Comment::class,
+"mymodel" => App\MyModel::class
+]
+```
+
 
 ### Create a comment from controller / model
 ``` php

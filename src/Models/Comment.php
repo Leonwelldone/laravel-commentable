@@ -9,8 +9,14 @@ class Comment extends Model {
 
     use Commentable;
 
-    protected $guarded = ['id', 'created_at', 'updated_at'];
+    protected $guarded = ['id'];
     protected $with = ["childrens","author"];
+    protected $table = "";
+
+    public function __construct(array $attributes = []) {
+        $this->table = config("laravel-commentable.table_name");
+        parent::__construct($attributes);
+    }
 
     public function commentableModel() {
         return config('laravel-commentable.model');
@@ -19,7 +25,6 @@ class Comment extends Model {
     public function childrens() {
         return $this->morphMany($this->commentableModel(), 'commentable');
     }
-
 
     /**
      * @return mixed
